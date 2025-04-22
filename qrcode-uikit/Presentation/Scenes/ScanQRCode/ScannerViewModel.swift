@@ -9,13 +9,10 @@ import Foundation
 import UIKit.UIImage
 
 protocol ScannerViewModelDelegate: AnyObject {
-    /// Уведомляет о успешном сохранении QR-кода
     func didSaveQRCodeSuccessfully()
     
-    /// Уведомляет об ошибке при сохранении QR-кода
     func didFailWithError(_ error: Error)
     
-    /// Уведомляет о необходимости перехода к экрану истории
     func navigateToHistory()
 }
 
@@ -27,10 +24,7 @@ final class ScannerViewModel: ScannerViewModelProtocol {
     
     var onShowHistory: (() -> Void)?
     
-    init(
-        saveQRCodeUseCase: SaveQRCodeUseCaseProtocol,
-        imageStorageService: ImageStorageServiceProtocol = ImageStorageService()
-    ) {
+    init(saveQRCodeUseCase: SaveQRCodeUseCaseProtocol, imageStorageService: ImageStorageServiceProtocol = ImageStorageService()) {
         self.saveQRCodeUseCase = saveQRCodeUseCase
         self.imageStorageService = imageStorageService
     }
@@ -46,7 +40,6 @@ final class ScannerViewModel: ScannerViewModelProtocol {
         }
     }
     
-    /// Переход к экрану истории
     func showHistory() {
         onShowHistory?()
     }

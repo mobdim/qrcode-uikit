@@ -15,10 +15,8 @@ final class FetchQRCodeHistoryUseCase: FetchQRCodeHistoryUseCaseProtocol {
     }
     
     func execute() throws -> [QRCode] {
-        // Получение данных из репозитория
         let qrCodeEntities = try repository.fetchQRCodeHistory()
         
-        // Преобразование в модели домена
         return qrCodeEntities.map { $0.toDomain() }
     }
 }

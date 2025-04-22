@@ -6,6 +6,5 @@
 //
 
 protocol SaveQRCodeUseCaseProtocol {
-    /// Сохраняет QR-код в базу данных
     func execute(content: String, imagePath: String?, thumbnailPath: String?) throws
 }

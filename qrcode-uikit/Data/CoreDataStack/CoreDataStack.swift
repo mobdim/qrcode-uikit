@@ -35,12 +35,10 @@ final class CoreDataStack {
         return container
     }()
     
-    // Контексты для разных потоков
     var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
-    /// Создает новый контекст для фоновых задач
     func newBackgroundContext() -> NSManagedObjectContext {
         let context = persistentContainer.newBackgroundContext()
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -58,7 +56,6 @@ final class CoreDataStack {
         }
     }
     
-    /// Сохраняет изменения в фоновом контексте
     func saveBackgroundContext(_ context: NSManagedObjectContext, completion: @escaping (Result<Void, Error>) -> Void) {
         context.perform {
             do {

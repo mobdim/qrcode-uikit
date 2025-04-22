@@ -16,18 +16,15 @@ final class QRCodeRepository: QRCodeRepositoryProtocol {
         self.coreDataStack = coreDataStack
     }
     
-    /// Сохраняет QR-код в базу данных
     func saveQRCode(content: String, imagePath: String?, thumbnailPath: String?) throws {
         try dataSource.insertQRCode(content: content, imagePath: imagePath, thumbnailPath: thumbnailPath)
         coreDataStack.saveContext()
     }
     
-    /// Получает историю сканированных QR-кодов
     func fetchQRCodeHistory() throws -> [QRCodeEntity] {
         return try dataSource.fetchAllQRCodeEntities()
     }
     
-    /// Удаляет QR-код по уникальному идентификатору
     func deleteQRCode(by id: UUID) throws {
         try dataSource.deleteQRCode(by: id)
         coreDataStack.saveContext()

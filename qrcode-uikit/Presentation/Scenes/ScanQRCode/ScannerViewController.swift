@@ -107,19 +107,16 @@ final class ScannerViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
-        // Добавление элементов на экран
         view.addSubview(previewView)
         view.addSubview(activityIndicator)
         view.addSubview(errorLabel)
         
-        // Настройка constraints
         NSLayoutConstraint.activate([
             // previewView
             previewView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             previewView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             previewView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             previewView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//            previewView.heightAnchor.constraint(equalTo: view.widthAnchor),
             
             // activityIndicator
             activityIndicator.centerXAnchor.constraint(equalTo: previewView.centerXAnchor),
@@ -257,7 +254,7 @@ extension ScannerViewController: ScannerViewModelDelegate {
     }
     
     func navigateToHistory() {
-        // Обработка перехода к истории
+        
     }
 }
 

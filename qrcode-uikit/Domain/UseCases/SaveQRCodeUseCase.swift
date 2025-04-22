@@ -14,14 +14,11 @@ final class SaveQRCodeUseCase: SaveQRCodeUseCaseProtocol {
         self.repository = repository
     }
     
-    /// Сохраняет QR-код в базу данных
     func execute(content: String, imagePath: String?, thumbnailPath: String?) throws {
-        // Бизнес-логика: проверка содержимого QR-кода
         guard !content.isEmpty else {
             throw NSError(domain: "SaveQRCodeUseCase", code: 1, userInfo: [NSLocalizedDescriptionKey: "Content cannot be empty"])
         }
         
-        // Вызов метода репозитория для сохранения QR-кода
         try repository.saveQRCode(content: content, imagePath: imagePath, thumbnailPath: thumbnailPath)
     }
 }
