@@ -17,7 +17,7 @@ final class CoreDataStack {
     lazy var persistentContainer: NSPersistentContainer = {
         removeExistingDatabaseIfNeeded()
         
-        let container = NSPersistentContainer(name: "qrcode_uikit")
+        let container = NSPersistentContainer(name: "Storage")
         
         let description = container.persistentStoreDescriptions.first
         description?.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)

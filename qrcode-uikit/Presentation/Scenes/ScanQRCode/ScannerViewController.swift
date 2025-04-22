@@ -40,6 +40,10 @@ final class ScannerViewController: UIViewController {
     
     private let captureSession = AVCaptureSession()
     private var previewLayer: AVCaptureVideoPreviewLayer?
+    private let photoOutput = AVCapturePhotoOutput()
+    private var isPhotoCaptured = false
+    
+    private var currentContent: String?
     
     // MARK: - Initialization
     init(viewModel: ScannerViewModelProtocol) {
@@ -101,7 +105,7 @@ final class ScannerViewController: UIViewController {
     
     // MARK: - UI Setup
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         // Добавление элементов на экран
         view.addSubview(previewView)
@@ -114,7 +118,8 @@ final class ScannerViewController: UIViewController {
             previewView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             previewView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             previewView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            previewView.heightAnchor.constraint(equalTo: view.widthAnchor),
+            previewView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+//            previewView.heightAnchor.constraint(equalTo: view.widthAnchor),
             
             // activityIndicator
             activityIndicator.centerXAnchor.constraint(equalTo: previewView.centerXAnchor),
@@ -138,25 +143,46 @@ final class ScannerViewController: UIViewController {
     
     // MARK: - Camera Setup
     private func setupCamera() {
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
+        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
             showError(message: "No camera available")
             return
         }
         
+        captureSession.beginConfiguration()
+        
+        for input in captureSession.inputs {
+            captureSession.removeInput(input)
+        }
+        
         do {
             let input = try AVCaptureDeviceInput(device: captureDevice)
-            captureSession.addInput(input)
-            
+            if captureSession.canAddInput(input) {
+                captureSession.addInput(input)
+            } else {
+                print("Не удалось добавить входной поток")
+                return
+            }
+                        
             let output = AVCaptureMetadataOutput()
-            captureSession.addOutput(output)
+            if captureSession.canAddOutput(output) {
+                captureSession.addOutput(output)
+                output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+                output.metadataObjectTypes = [.qr, .ean13, .ean8, .code128, .upce, .code39]
+            } else {
+                print("Не удалось добавить выходной поток")
+                return
+            }
             
-            output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            output.metadataObjectTypes = [.qr]
+            if captureSession.canAddOutput(photoOutput) {
+                captureSession.addOutput(photoOutput)
+            }
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             previewLayer?.videoGravity = .resizeAspectFill
             previewLayer?.frame = previewView.bounds
             previewView.layer.addSublayer(previewLayer!)
+            
+            captureSession.commitConfiguration()
         } catch {
             showError(message: "Failed to setup camera")
         }
@@ -188,6 +214,15 @@ final class ScannerViewController: UIViewController {
         UIGraphicsEndImageContext()
         return image
     }
+    
+    private func captureImage() {
+        
+        guard !isPhotoCaptured else { return }
+        isPhotoCaptured = true
+        
+        let settings = AVCapturePhotoSettings()
+        photoOutput.capturePhoto(with: settings, delegate: self)
+    }
 }
 
 // MARK: - AVCaptureMetadataOutputObjectsDelegate
@@ -198,14 +233,12 @@ extension ScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             return
         }
         
-        // Остановка сессии после сканирования
-        stopCaptureSession()
+        currentContent = content
+        captureImage()
         
-        // Обработка изображения
-        let image = snapshot(from: previewView)
-        
-        // Сохранение QR-кода
-        viewModel.saveQRCode(content: content, image: image)
+//        let image = snapshot(from: previewView)
+//        stopCaptureSession()
+//        viewModel.saveQRCode(content: content, image: image)
     }
 }
 
@@ -225,5 +258,23 @@ extension ScannerViewController: ScannerViewModelDelegate {
     
     func navigateToHistory() {
         // Обработка перехода к истории
+    }
+}
+
+extension ScannerViewController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        
+        guard let imageData = photo.fileDataRepresentation(),
+              let image = UIImage(data: imageData) else {
+            print("Failed to capture image")
+            return
+        }
+        
+        stopCaptureSession()
+        
+        guard let currentContent else { assert(false) }
+        
+        
+        viewModel.saveQRCode(content: currentContent, image: image)
     }
 }

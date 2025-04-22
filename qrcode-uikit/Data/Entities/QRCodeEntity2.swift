@@ -8,8 +8,8 @@
 import Foundation
 import CoreData
 
-@objc(QRCodeEntity)
-class QRCodeEntity: NSManagedObject {
+@objc(QRCodeEntity2)
+class QRCodeEntity2: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var content: String
     @NSManaged public var timestamp: Date
@@ -32,11 +32,14 @@ extension QRCodeEntity {
         return entity
     }
     
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<QRCodeEntity> {
-        return NSFetchRequest<QRCodeEntity>(entityName: "QRCodeEntity")
-    }
+//    @nonobjc public class func fetchRequest() -> NSFetchRequest<QRCodeEntity> {
+//        return NSFetchRequest<QRCodeEntity>(entityName: "QRCodeEntity")
+//    }
     
     func toDomain() -> QRCode {
+        
+        guard let content, let timestamp else { assert(false) }
+        
         return QRCode(content: content,
                       scanDate: timestamp,
                       imagePath: imagePath,
