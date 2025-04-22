@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		32326DAB2DB7BA2B00964EF9 /* structure.md in Resources */ = {isa = PBXBuildFile; fileRef = 32326DAA2DB7BA2B00964EF9 /* structure.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		32326CA32DB50EB200964EF9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		32326C892DB50EB000964EF9 /* qrcode-uikit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "qrcode-uikit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32326CA22DB50EB200964EF9 /* qrcode-uikitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "qrcode-uikitTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32326CAC2DB50EB200964EF9 /* qrcode-uikitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "qrcode-uikitUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		32326DAA2DB7BA2B00964EF9 /* structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = structure.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		32326C802DB50EB000964EF9 = {
 			isa = PBXGroup;
 			children = (
+				32326DAA2DB7BA2B00964EF9 /* structure.md */,
 				32326C8B2DB50EB000964EF9 /* qrcode-uikit */,
 				32326CA52DB50EB200964EF9 /* qrcode-uikitTests */,
 				32326CAF2DB50EB200964EF9 /* qrcode-uikitUITests */,
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32326DAB2DB7BA2B00964EF9 /* structure.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,11 +299,12 @@
 				DEVELOPMENT_TEAM = 74V7AJ74L3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "qrcode-uikit/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need a camera";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,11 +328,12 @@
 				DEVELOPMENT_TEAM = 74V7AJ74L3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "qrcode-uikit/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need a camera";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
